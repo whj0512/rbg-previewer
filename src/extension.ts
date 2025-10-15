@@ -177,6 +177,7 @@ function getWebviewContent(rbgData: any): string {
                 let offsetX = 0;
                 let offsetY = 0;
                 const nodeData = ${JSON.stringify(rbgData.nodes || [])};
+                const transitionData = ${JSON.stringify(rbgData.transitions || [])};
                 
                 function initCanvas() {
                     canvas.width = canvas.parentElement.clientWidth - 40;
@@ -197,15 +198,12 @@ function getWebviewContent(rbgData: any): string {
                     const port = ports.find(p => p.id === portId);
                     const { x, y, width, height } = node.render_config;
                     
+                    // port group types: top / bottom
                     if (port?.group === 'top') {
                         return { x: x + width/2, y };
                     } else if (port?.group === 'bottom') {
                         return { x: x + width/2, y: y + height };
-                    } else if (port?.group === 'left') {
-                        return { x, y: y + height/2 };
-                    } else if (port?.group === 'right') {
-                        return { x: x + width, y: y + height/2 };
-                    }
+                    } 
                     
                     // Default to node center if no port found
                     return getNodeCenter(node);
@@ -245,15 +243,16 @@ function getWebviewContent(rbgData: any): string {
 
                     nodeData.forEach(targetNode => {
                         if (targetNode.input_transitions && targetNode.input_transitions.length > 0) {
-                            targetNode.input_transitions.forEach(sourceNodeId => {
-                                const sourceNode = nodeData.find(n => n.id === sourceNodeId);
+                            targetNode.input_transitions.forEach(transitionId => {
+                                const transition = transitionData.find(t => t.id === transitionId);
+                                const sourceNode = nodeData.find(n => n.id === transition.source_node);
                                 if (sourceNode && sourceNode.render_config.visible && targetNode.render_config.visible) {
                                     // Find appropriate ports for source and target
-                                    const sourcePort = sourceNode.ports?.items?.[0];
-                                    const targetPort = targetNode.ports?.items?.[0];
+                                    const sourcePortName = transition.source_port_name;
+                                    const targetPortName = transition.target_port_name;
                                     
-                                    const from = getNodePortPoint(sourceNode, sourcePort?.id);
-                                    const to = getNodePortPoint(targetNode, targetPort?.id);
+                                    const from = getNodePortPoint(sourceNode, sourcePortName);
+                                    const to = getNodePortPoint(targetNode, targetPortName);
                                     
                                     drawArrow(from.x, from.y, to.x, to.y);
                                 }
