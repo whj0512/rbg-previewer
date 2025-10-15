@@ -184,11 +184,82 @@ function getWebviewContent(rbgData: any): string {
                     drawGraph();
                 }
 
+                function getNodeCenter(node) {
+                    const { x, y, width, height } = node.render_config;
+                    return {
+                        x: x + width/2,
+                        y: y + height/2
+                    };
+                }
+
+                function getNodePortPoint(node, portId) {
+                    const ports = node.ports?.items || [];
+                    const port = ports.find(p => p.id === portId);
+                    const { x, y, width, height } = node.render_config;
+                    
+                    if (port?.group === 'top') {
+                        return { x: x + width/2, y };
+                    } else if (port?.group === 'bottom') {
+                        return { x: x + width/2, y: y + height };
+                    } else if (port?.group === 'left') {
+                        return { x, y: y + height/2 };
+                    } else if (port?.group === 'right') {
+                        return { x: x + width, y: y + height/2 };
+                    }
+                    
+                    // Default to node center if no port found
+                    return getNodeCenter(node);
+                }
+
+                function drawArrow(fromX, fromY, toX, toY) {
+                    const headLength = 10;
+                    const angle = Math.atan2(toY - fromY, toX - fromX);
+                    
+                    // Draw line
+                    ctx.beginPath();
+                    ctx.moveTo(fromX, fromY);
+                    ctx.lineTo(toX, toY);
+                    ctx.stroke();
+                    
+                    // Draw arrow head
+                    ctx.beginPath();
+                    ctx.moveTo(toX, toY);
+                    ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI/6),
+                             toY - headLength * Math.sin(angle - Math.PI/6));
+                    ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI/6),
+                             toY - headLength * Math.sin(angle + Math.PI/6));
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
                 function drawGraph() {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.save();
                     ctx.translate(offsetX, offsetY);
                     ctx.scale(scale, scale);
+
+                    // Draw edges first
+                    ctx.strokeStyle = 'var(--vscode-editor-foreground)';
+                    ctx.fillStyle = 'var(--vscode-editor-foreground)';
+                    ctx.lineWidth = 1;
+
+                    nodeData.forEach(targetNode => {
+                        if (targetNode.input_transitions && targetNode.input_transitions.length > 0) {
+                            targetNode.input_transitions.forEach(sourceNodeId => {
+                                const sourceNode = nodeData.find(n => n.id === sourceNodeId);
+                                if (sourceNode && sourceNode.render_config.visible && targetNode.render_config.visible) {
+                                    // Find appropriate ports for source and target
+                                    const sourcePort = sourceNode.ports?.items?.[0];
+                                    const targetPort = targetNode.ports?.items?.[0];
+                                    
+                                    const from = getNodePortPoint(sourceNode, sourcePort?.id);
+                                    const to = getNodePortPoint(targetNode, targetPort?.id);
+                                    
+                                    drawArrow(from.x, from.y, to.x, to.y);
+                                }
+                            });
+                        }
+                    });
 
                     // Draw nodes
                     nodeData.forEach(node => {
