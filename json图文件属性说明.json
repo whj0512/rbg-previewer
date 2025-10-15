@@ -1,0 +1,982 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": { 
+        "nodes": {
+            "type": "array",
+            "_comment_nodes": "必要字段，节点list，存放图中的各个节点的属性",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "_comment_id": "必要字段，节点id"
+                    },
+                    "desc": {
+                        "type": "string",
+                        "_comment_desc": "必要字段，节点描述"
+                    },
+                    "type_name": {
+                        "type": "string",
+                        "_comment_type_name": "必要字段，节点类型"
+                    },
+                    "render_config": {
+                        "type": "object",
+                        "_comment_render_config": "前端描述",
+                        "properties": {
+                            "color": {
+                                "type": "string"
+                            },
+                            "visible": {
+                                "type": "boolean"
+                            },
+                            "x": {
+                                "type": "integer"
+                            },
+                            "y": {
+                                "type": "number"
+                            },
+                            "width": {
+                                "type": "integer"
+                            },
+                            "height": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "color",
+                            "visible",
+                            "x",
+                            "y",
+                            "width",
+                            "height"
+                        ]
+                    },
+                    "is_init_node": {
+                        "type": "boolean",
+                        "_comment_is_init_node": "必要字段，是否为初始节点"
+                    },
+                    "is_finish_node": {
+                        "type": "boolean",
+                        "_comment_is_finish_node": "必要字段，是否为最终节点"
+                    },
+                    "input_transitions": {
+                        "type": "array",
+                        "_comment_input_transitions": "必要字段，接入的transition的id",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "ports": {
+                        "type": "object",
+                        "_comment_ports": "前端界面渲染的属性",
+                        "properties": {
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "group": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "attrs": {
+                                            "type": "object",
+                                            "properties": {
+                                                "text": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "text": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "additionalProperties": false,
+                                                    "required": [
+                                                        "text"
+                                                    ]
+                                                },
+                                                "circle": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "r": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "additionalProperties": false,
+                                                    "required": [
+                                                        "r"
+                                                    ]
+                                                }
+                                            },
+                                            "additionalProperties": false,
+                                            "required": [
+                                                "text"
+                                            ]
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "group",
+                                        "id"
+                                    ]
+                                }
+                            },
+                            "groups": {
+                                "type": "object",
+                                "properties": {
+                                    "top": {
+                                        "type": "object",
+                                        "properties": {
+                                            "position": {
+                                                "type": "string"
+                                            },
+                                            "args": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "strict": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "strict"
+                                                ]
+                                            },
+                                            "attrs": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "circle": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "r": {
+                                                                "type": "integer"
+                                                            },
+                                                            "magnet": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "stroke": {
+                                                                "type": "string"
+                                                            },
+                                                            "strokeWidth": {
+                                                                "type": "integer"
+                                                            },
+                                                            "fill": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "r",
+                                                            "magnet",
+                                                            "stroke",
+                                                            "strokeWidth",
+                                                            "fill"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "circle"
+                                                ]
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "position",
+                                            "attrs"
+                                        ]
+                                    },
+                                    "bottom": {
+                                        "type": "object",
+                                        "properties": {
+                                            "position": {
+                                                "type": "string"
+                                            },
+                                            "args": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "strict": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "strict"
+                                                ]
+                                            },
+                                            "attrs": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "circle": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "r": {
+                                                                "type": "integer"
+                                                            },
+                                                            "magnet": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "stroke": {
+                                                                "type": "string"
+                                                            },
+                                                            "strokeWidth": {
+                                                                "type": "integer"
+                                                            },
+                                                            "fill": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "r",
+                                                            "magnet",
+                                                            "stroke",
+                                                            "strokeWidth",
+                                                            "fill"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "circle"
+                                                ]
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "position",
+                                            "args",
+                                            "attrs"
+                                        ]
+                                    },
+                                    "condition": {
+                                        "type": "object",
+                                        "properties": {
+                                            "position": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "position"
+                                                ]
+                                            },
+                                            "attrs": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "circle": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "r": {
+                                                                "type": "integer"
+                                                            },
+                                                            "magnet": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "stroke": {
+                                                                "type": "string"
+                                                            },
+                                                            "strokeWidth": {
+                                                                "type": "integer"
+                                                            },
+                                                            "fill": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "r",
+                                                            "magnet",
+                                                            "stroke",
+                                                            "strokeWidth",
+                                                            "fill"
+                                                        ]
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "circle"
+                                                ]
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "position",
+                                            "label",
+                                            "attrs"
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "top"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "items"
+                        ]
+                    },
+                    "output_transitions": {
+                        "type": "array",
+                        "_comment_output_transitions": "必要字段，接出的transition的id",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "params_list": {
+                        "type": "array",
+                        "_comment_params_list": "call组件必要字段，默认的参数列表，包含参数名称label和参数值value",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "label": {
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "type": "integer"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "label",
+                                "value"
+                            ]
+                        }
+                    },
+                    "in_list": {
+                        "type": "array",
+                        "_comment_in_list": "输入列表"
+
+                    },
+                    "return_list": {
+                        "type": "array",
+                        "_comment_return_list": "call组件输出列表"
+                    },
+                    "script": {
+                        "type": "string",
+                        "_comment_script": "call组件必要字段，表达式"
+                    },
+                    "enable_inverse": {
+                        "type": "boolean",
+                        "_comment_enable_inverse": "call组件必要字段，是否反转设置项"
+                    },
+                    "inverse_script": {
+                        "type": "string",
+                        "_comment_inverse_script": "call组件字段，反转表达式"
+                    },
+                    "tolerance_type": {
+                        "type": "string",
+                        "_comment_tolerance_type": "call组件字段，限度类型"
+                    },
+                    "tolerance_value": {
+                        "type": "integer",
+                        "_comment_tolerance_value": "call组件字段，限度取值"
+                    },
+                    "time_related_step": {
+                        "type": "integer",
+                        "_comment_time_related_step": "call组件字段,时间相关步骤"
+                    },
+                    "time_related_duration": {
+                        "type": "integer"
+                    },
+                    "pre_think_time": {
+                        "type": "integer",
+                        "_comment_pre_think_time": "前置时间"
+                        
+                    },
+                    "post_think_time": {
+                        "type": "string",
+                        "_comment_post_think_time": "后置时间"
+                    },
+                    "exit_action_list": {
+                        "type": "array",
+                        "_comment_exit_action_list": "退出动作列表，预留属性"
+
+                    },
+                    "entry_action_list": {
+                        "type": "array",
+                        "_comment_entry_action_list": "进入动作列表，预留属性"
+                    },
+                    "during_action_list": {
+                        "type": "array",
+                        "_comment_during_action_list": "必要字段，赋值动作列表， 存放前置时间pre_think_time，后置时间post_think_time，表达式express和表达式类型type",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "pre_think_time": {
+                                    "type": "integer"
+                                },
+                                "post_think_time": {
+                                    "type": "integer"
+                                },
+                                "express": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "pre_think_time",
+                                "post_think_time",
+                                "express",
+                                "type"
+                            ]
+                        }
+                    },
+                    "normal_test_action_list": {
+                        "type": "array",
+                        "_comment_normal_test_action_list": "必要字段，比较动作列表，与during_action_list类似。存放前置时间pre_think_time，后置时间post_think_time，表达式express和表达式类型type"
+                    },
+                    "dynamic_test_action_list": {
+                        "type": "array",
+                        "_comment_dynamic_test_action_list": "必要字段，动态比较动作列表，表达式中存在执行时能确定值的变量，与during_action_list类似。存放前置时间pre_think_time，后置时间post_think_time，表达式express和表达式类型type"
+                    },
+                    "ref_graph": {
+                        "type": "null"
+                    },
+                    "forward_propagation": {
+                        "type": "boolean",
+                        "_comment_forward_propagation": "必要字段，信号取值是否向下传播"
+
+                    },
+                    "time_props": {
+                        "_comment_time_props": "必要字段，时间属性，为null或者对象，字典中包含时间类型type，取值value，单位unit",
+                        "anyOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "integer"
+                                    },
+                                    "unit": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "type",
+                                    "value",
+                                    "unit"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "test_layer": {
+                        "type": "object",
+                        "_comment_test_layer": "必要字段，信号测试点",
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "valueName": {
+                                            "type": "string"
+                                        },
+                                        "valueType": {
+                                            "type": "string"
+                                        },
+                                        "positive_data": {
+                                            "type": "string"
+                                        },
+                                        "negative_data": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "valueName",
+                                        "valueType",
+                                        "positive_data",
+                                        "negative_data"
+                                    ]
+                                }
+                            },
+                            "is_order": {
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "data",
+                            "is_order"
+                        ]
+                    },
+                    "test_coverage": {
+                        "type": "object",
+                        "_comment_test_coverage": "必要字段，信号测试覆盖方式",
+                        "properties": {
+                            "is_configured": {
+                                "type": "boolean"
+                            },
+                            "coverage_config": {
+                                "type": "object",
+                                "properties": {
+                                    "condition_coverage_config": {
+                                        "type": "boolean"
+                                    },
+                                    "condition_coverage_method": {
+                                        "type": "string"
+                                    },
+                                    "point_coverage_config": {
+                                        "type": "boolean"
+                                    },
+                                    "point_coverage_method": {
+                                        "type": "string"
+                                    },
+                                    "coverage_type": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "condition_coverage_config",
+                                    "condition_coverage_method",
+                                    "point_coverage_config",
+                                    "point_coverage_method",
+                                    "coverage_type"
+                                ]
+                            },
+                            "selected_nodes": {
+                                "type": "array"
+                            },
+                            "contain_test_layer": {
+                                "type": "boolean"
+                            },
+                            "path_coverage": {
+                                "type": "object",
+                                "properties": {
+                                    "path_coverage_method": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "path_coverage_method"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "condition": {
+                        "type": "string",
+                        "_comment_condition": "condition必要字段，表达式"
+                    },
+                    "branch_yes": {
+                        "type": "string",
+                        "_comment_branch_yes": "condition必要字段，yes一边连接点节点id"
+                    },
+                    "branch_no": {
+                        "type": "string",
+                        "_comment_branch_no": "condition必要字段，no一边连接点节点id"
+                    },
+                    "time_tolerance": {
+                        "type": "object",
+                        "_comment_time_tolerance": "condition必要字段，时间函数的取值限度",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "type",
+                            "value"
+                        ]
+                    },
+                    "comment": {
+                        "type": "string",
+                        "_comment_branch_no": "comment必要字段，注释"
+                    },
+                    "graph_id": {
+                        "type": "string",
+                        "_comment_graph_id": "graph-ref必要字段，引用图id"
+                    },
+                    "params": {
+                        "type": "array",
+                        "_comment_params": "graph-ref字段，预留属性"
+
+                    },
+                    "return_val": {
+                        "type": "string",
+                        "_comment_return_val": "graph-ref字段，预留属性"
+                    },
+                    "has_return_val": {
+                        "type": "boolean",
+                        "_comment_has_return_val": "graph-ref字段，预留属性"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "desc",
+                    "type_name",
+                    "render_config",
+                    "is_init_node",
+                    "is_finish_node",
+                    "input_transitions",
+                    "ports",
+                    "output_transitions"
+                ]
+            }
+        },
+        "id": {
+            "type": "string",
+            "_comment_id": "必要字段，图id，唯一标识"
+        },
+        "test_coverage": {
+            "type": "object",
+            "_comment_test_coverage": "测试覆盖策略设置项",
+            "properties": {
+                "path_coverage": {
+                    "type": "object",
+                    "properties": {
+                        "path_coverage_method": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "path_coverage_method"
+                    ]
+                },
+                "condition_points_coverage": {
+                    "type": "object",
+                    "properties": {
+                        "condition_coverage_method": {
+                            "type": "string"
+                        },
+                        "point_coverage_method": {
+                            "type": "string"
+                        },
+                        "coverage_type": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "condition_coverage_method",
+                        "point_coverage_method",
+                        "coverage_type"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "path_coverage",
+                "condition_points_coverage"
+            ]
+        },
+        "h_function": {
+            "type": "string",
+            "_comment_h_function": "预留属性，为none"
+        },
+        "entry_action_list": {
+            "type": "array",
+            "_comment_entry_action_list": "进入动作"
+        },
+        "exit_action_list": {
+            "type": "array",
+            "_comment_exit_action_list": "退出动作"
+        },
+        "graph_type": {
+            "type": "string",
+            "_comment_graph_type": "必要字段,图类型，包含request、testcase"
+        },
+        "breakpoints": {
+            "type": "array",
+            "_comment_breakpoints": "断点"
+        },
+        "terminate_ref_graph": {
+            "type": "object",
+            "_comment_terminate_ref_graph": "必要字段,后置引用图设置",
+            "additionalProperties": false
+        },
+        "pre_ref_graph": {
+            "type": "object",
+            "_comment_pre_ref_graph": "必要字段,前置引用图设置",
+            "additionalProperties": false
+        },
+        "silent": {
+            "type": "boolean"
+        },
+        "desc": {
+            "type": "string",
+            "_comment_desc": "必要字段,图描述"
+        },
+        "type_name": {
+            "type": "string",
+            "_comment_type_name": "必要字段,文件类型：graph"
+        },
+        "transitions": {
+            "type": "array",
+            "_comment_transitions": "必要字段,线list，存放图中所有的线的属性",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "render_config": {
+                        "type": "object",
+                        "_comment_properties": "前端渲染字段",
+                        "properties": {
+                            "color": {
+                                "type": "string"
+                            },
+                            "visible": {
+                                "type": "boolean"
+                            },
+                            "x": {
+                                "type": "integer"
+                            },
+                            "y": {
+                                "type": "integer"
+                            },
+                            "width": {
+                                "type": "integer"
+                            },
+                            "height": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "color",
+                            "visible"
+                        ]
+                    },
+                    "test_layer": {
+                        "type": "object",
+                        "_comment_test_layer": "必要属性，测试点设置项",
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "valueName": {
+                                            "type": "string"
+                                        },
+                                        "valueType": {
+                                            "type": "string"
+                                        },
+                                        "positive_data": {
+                                            "type": "string"
+                                        },
+                                        "negative_data": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "valueName",
+                                        "valueType",
+                                        "positive_data",
+                                        "negative_data"
+                                    ]
+                                }
+                            },
+                            "is_order": {
+                                "type": "boolean"
+                            },
+                            "is_group": {
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "data",
+                            "is_order",
+                            "is_group"
+                        ]
+                    },
+                    "test_coverage": {
+                        "type": "object",
+                        "_comment_test_coverage": "必要属性，测试覆盖策略设置项",
+                        "properties": {
+                            "is_configured": {
+                                "type": "boolean"
+                            },
+                            "coverage_config": {
+                                "type": "object",
+                                "properties": {
+                                    "condition_coverage_config": {
+                                        "type": "boolean"
+                                    },
+                                    "point_coverage_config": {
+                                        "type": "boolean"
+                                    },
+                                    "coverage_type": {
+                                        "type": "string"
+                                    },
+                                    "condition_coverage_method": {
+                                        "type": "string"
+                                    },
+                                    "point_coverage_method": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "condition_coverage_config",
+                                    "point_coverage_config",
+                                    "coverage_type",
+                                    "condition_coverage_method",
+                                    "point_coverage_method"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "is_configured"
+                        ]
+                    },
+                    "action_list": {
+                        "type": "array",
+                        "_comment_action_list": "预留属性"
+                    },
+                    "loop_times": {
+                        "type": "integer",
+                        "_comment_loop_times": "必要属性，循环次数"
+                    },
+                    "event_list": {
+                        "type": "array",
+                        "_comment_event_list": "预留属性"
+                    },
+                    "vertices": {
+                        "type": "array",
+                        "_comment_vertices": "前端属性",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "x": {
+                                    "type": "integer"
+                                },
+                                "y": {
+                                    "type": "integer"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "x",
+                                "y"
+                            ]
+                        }
+                    },
+                    "time_tolerance": {
+                        "type": "object",
+                        "_comment_time_tolerance": "必要字段，时间函数的取值限度",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "value": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "type",
+                            "value"
+                        ]
+                    },
+                    "sourcePort": {
+                        "type": "string",
+                        "_comment_sourcePort": "必要字段，state的连接桩id"
+                    },
+                    "targetPort": {
+                        "type": "string",
+                        "_comment_targetPort": "必要字段，state的连接桩id"
+                    },
+                    "desc": {
+                        "type": "string",
+                        "_comment_desc": "必要字段，state的连接桩id"
+                    },
+                    "type_name": {
+                        "type": "string",
+                        "_comment_type_name": "必要字段，state的连接桩id"
+                    },
+                    "condition": {
+                        "type": "string",
+                        "_comment_condition": "必要字段，state的连接桩id"
+                    },
+                    "source_node": {
+                        "type": "string",
+                        "_comment_source_node": "必要字段，state的连接桩id"
+                    },
+                    "source_port_name": {
+                        "type": "string",
+                        "_comment_source_port_name": "必要字段，state的连接桩id"
+                    },
+                    "target_node": {
+                        "type": "string",
+                        "_comment_target_nodet": "必要字段，state的连接桩id"
+                    },
+                    "target_port_name": {
+                        "type": "string",
+                        "_comment_target_port_name": "必要字段，state的连接桩id"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "render_config",
+                    "test_layer",
+                    "test_coverage",
+                    "action_list",
+                    "loop_times",
+                    "event_list",
+                    "vertices",
+                    "time_tolerance",
+                    "desc",
+                    "type_name",
+                    "condition",
+                    "source_node",
+                    "source_port_name",
+                    "target_node",
+                    "target_port_name"
+                ]
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "nodes",
+        "id",
+        "test_coverage",
+        "h_function",
+        "entry_action_list",
+        "exit_action_list",
+        "graph_type",
+        "breakpoints",
+        "terminate_ref_graph",
+        "pre_ref_graph",
+        "silent",
+        "desc",
+        "type_name",
+        "transitions"
+    ]
+}
